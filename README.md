@@ -62,6 +62,10 @@ python GetOldTweets3.py --querysearch "football" --lang es --maxtweets 100
 python GetOldTweets3.py --querysearch "BBNaija" --near "6.52, 3.37" --within 40km --maxtweets 100
 ```
   
-Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.        BELLA CIAO!!!!!
+Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.        
+
+
+
+BELLA CIAO!!!!!
   
   
