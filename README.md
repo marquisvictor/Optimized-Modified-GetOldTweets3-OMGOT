@@ -3,11 +3,11 @@ GetOldTweets-Python is a project written in Python to mine old and backdated twe
 
 
  ## Details
-Before coming here to get backdated timeline tweets, you might have gone to Twitter to create a Developer account, before the sad reality dawns on you that you cannot mine tweets older than 7 days, using twitter's rest API, unless you pay and even when you do,you are restricted to a limit of 100 tweets daily. Just how slow would that be if you intend to mine say 10 years worth of textual big data for twitter for analuysis. You might have also tried Googling some other methods to mine old tweets, you might have seen different sites, libraries or tools you didnt know how to use, and all sorts of confusing information on the web. This modified getoldtweets3 library helps you download backdated-timeline twitter data easily and without hassles from command line, either on windows OS, ubuntu-linux OS, or Mac OS. You only need to have python installed on your machine, yeah. You also need to set the environment variable or install python in such a way that you can call it from the command line. [check here](https://stackoverflow.com/posts/54934172/edit)
+Before coming here to get backdated timeline tweets, you might have gone to Twitter to create a Developer account, before the sad reality dawns on you that you can not mine tweets older than 7 days, using twitter's rest API, unless you pay and even when you do, you are restricted to a limit of 100 tweets daily. Just how slow would that be if you intend to mine say 10 years worth of textual big data for data analysis. You might have also tried "Googling" some other methods to mine old tweets, you might have seen different sites, libraries or tools you didnt know how to use, and all sorts of confusing information on the web. This modified getoldtweets3 library helps you download backdated-timeline twitter data easily and without hassles from command line, either on windows OS, ubuntu-linux OS, or Mac OS. You only need to have python installed on your machine, yeah. You also need to set the environment variable or install python in such a way that you can call it from the command line. [check here](https://stackoverflow.com/posts/54934172/edit)
 
 
 ## Prerequisites
-This packages assumes you are running python version 3.x on your local machine, and that you have already set the python environm ent variable path, so you can interactively fire up python from command prompt or terminal without getting any error. If you haven't, kindly follow this [stackoverflow answer](https://stackoverflow.com/questions/3701646/how-to-add-to-the-pythonpath-in-windows-so-it-finds-my-modules-packages) for guidance, [this too](https://stackoverflow.com/posts/54934172/edit). After doing all those, the next major packages you need to install are pyQuery, and Lxml for handling requests and xml/html documents. Easy stuff, just use `pip install pyquery` and `pip install lxml`   
+This packages assumes you are running python version 3.x on your local machine, and that you have already set the python environment variable path, so you can interactively fire up python from command prompt or terminal without getting any error. If you haven't, kindly follow this [stackoverflow answer](https://stackoverflow.com/questions/3701646/how-to-add-to-the-pythonpath-in-windows-so-it-finds-my-modules-packages) for guidance, [this too](https://stackoverflow.com/posts/54934172/edit). After doing all those, the next major packages you need to install are pyQuery, and Lxml for handling requests and xml/html documents. Easy stuff, just use `pip install pyquery` and `pip install lxml`   
 
 
 ## Components
@@ -38,7 +38,7 @@ This packages assumes you are running python version 3.x on your local machine, 
 
 ## Usage
 
-Clone or download the repo to your local machine, then cd into the downloaded GetOldTweets3 folder, and open up cmd right in that same folder. and run the following codes in the examples below. Feel free to customize, changing the parameters/arguments to the taste of your project. 
+Clone or download the repo to your local machine, then cd into the downloaded GetOldTweets3 folder, and open up cmd right in that same folder. and run the following codes in the examples below. Feel free to customize, change the parameters/arguments according to the need of your project. 
 
 ## Use Cases
 
