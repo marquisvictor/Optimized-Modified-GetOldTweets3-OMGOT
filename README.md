@@ -44,12 +44,12 @@ Clone or download the repo to your local machine, then cd into the downloaded Ge
 
 **Use case 1 - Get the last 50 top tweets by username:**
 ```
-python GetOldTweets3.py --username "MBuhari" --toptweets --maxtweets 50
+python GetOldTweets3.py --username "mo4president" --toptweets --maxtweets 50
 ```
 
 **Use case 2 - Get 500 tweets by the username and bound dates**:
 ```
-python GetOldTweets3.py --username "MBuhari" --since 2017-05-10 --until 2019-05-10 --maxtweets 500
+python GetOldTweets3.py --username "mo4president" --since 2017-05-10 --until 2019-05-10 --maxtweets 500
 ```
 
 **Use case 3 - Get tweets by language and keyword search:**
