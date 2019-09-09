@@ -42,13 +42,14 @@ This package was optimized to work more efficiently and seamlessly on both Windo
 
 ## Usage - Very Important to Understand!!
 
-Clone or download the repo to your local machine, then cd into the downloaded GetOldTweets3 folder, and open up command prompt oor terminal right in that same folder. then run the following codes in the examples below. Feel free to customize, change the parameters/arguments according to the need of your project. 
+Clone or download the repo to your local machine, then cd into the downloaded GetOldTweets3 folder, and open up command prompt or terminal right in that same folder. then run the following codes in the examples below. Please Feel free to customize, change the parameters/arguments as used in the examples below according to the needs of your project. 
 
 ## Use Cases
 
-**Use case 1 - Get the last 50 top tweets by username:**
+**Use case 1 - Get the last 100 top tweets by username:**
+
 ```
-python GetOldTweets3.py --username "mo4president" --toptweets --maxtweets 50
+python GetOldTweets3.py --username "mo4president" --toptweets --maxtweets 100
 ```
 
 **Use case 2 - Get 500 tweets by the username and bound dates**:
@@ -66,7 +67,10 @@ python GetOldTweets3.py --querysearch "football" --lang es --maxtweets 100
 python GetOldTweets3.py --querysearch "BBNaija" --near "6.52, 3.37" --within 40km --maxtweets 500
 ```
 
-Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.        
+Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.      
+
+irekponorvictor@gmail.com 
+AI AFRICA LAB. 
 
 
 
