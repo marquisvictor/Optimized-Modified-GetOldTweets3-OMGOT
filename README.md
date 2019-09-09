@@ -51,6 +51,7 @@ Clone or download the repo to your local machine, then cd into the downloaded Ge
 ```
 python GetOldTweets3.py --username "mo4president" --toptweets --maxtweets 100
 ```
+Specified ```--username```, ```--toptweets```, and ```--maxtweets``` which was set to 100. Meaning to retrieve the last 100 top tweets from twitter, made by that username. 
 
 **Use case 2 - Get 500 tweets by the username and bound dates**:
 ```
