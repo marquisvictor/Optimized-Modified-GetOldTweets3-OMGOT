@@ -3,15 +3,16 @@ GetOldTweets-Python is a project written in Python to mine old and backdated twe
 
 
  ## Details
-Before coming here to get backdated timeline tweets, you might have gone to Twitter to create a Developer account, before the sad reality dawns on you that you can not mine tweets older than 7 days, using twitter's rest API, unless you pay and even when you do, you are restricted to a limit of 100 tweets daily. Just how slow would that be if you intend to mine say 10 years worth of textual big data for data analysis. You might have also tried "Googling" some other methods to mine old tweets, you might have seen different sites, libraries or tools you didnt know how to use, and all sorts of confusing information on the web. This modified getoldtweets3 library helps you download backdated-timeline twitter data easily and without hassles from command line, either on windows OS, ubuntu-linux OS, or Mac OS. You only need to have python installed on your machine, yeah. You also need to set the environment variable or install python in such a way that you can call it from the command line. [check here](https://stackoverflow.com/posts/54934172/edit)
+Before coming here to get backdated timeline tweets, you might have gone to Twitter to create a Developer account, before the sad reality dawns on you that you can not mine tweets older than 7 days, using twitter's rest API, unless you pay and even when you do, you are restricted to a limit of 100 tweets daily. Just how slow would that be if you intend to mine say 10 years worth of textual big data for data analysis. You might have also tried "Googling" some other methods to mine old tweets, you might have seen different sites, libraries or tools you didnt know how to use, and all sorts of confusing information on the web. This modified getoldtweets3 library helps you download backdated-timeline twitter data easily and without hassles from command line, either on windows OS, ubuntu-linux OS, or Mac OS. You only need to have python installed on your machine, yeah. You also need to set the environment variable or install python in such a way that you can call it from the command line. [check here to see you can do that easily](https://stackoverflow.com/posts/54934172/)
 
 
 ## Prerequisites
-This packages assumes you are running python version 3.x on your local machine, and that you have already set the python environment variable path, so you can interactively fire up python from command prompt or terminal without getting any error. If you haven't, kindly follow this [stackoverflow answer](https://stackoverflow.com/questions/3701646/how-to-add-to-the-pythonpath-in-windows-so-it-finds-my-modules-packages) for guidance, [this too](https://stackoverflow.com/posts/54934172/edit). After doing all those, the next major packages you need to install are pyQuery, and Lxml for handling requests and xml/html documents. Easy stuff, just use `pip install pyquery` and `pip install lxml`   
+This packages assumes you are running python version 3.x on your local machine, and that you have already set the python environment variable path, so you can interactively fire up python from command prompt or terminal without getting any error. If you haven't, kindly follow this [stackoverflow answer](https://stackoverflow.com/questions/3701646/how-to-add-to-the-pythonpath-in-windows-so-it-finds-my-modules-packages) for guidance, [you could also this too for more clarity](https://stackoverflow.com/posts/54934172/edit). After getting that right, the next major packages you need to install are pyQuery, and Lxml for handling requests and xml/html documents. That could be easily done on cmd or terminal by - just typing `pip install pyquery` once that is done, then you do `pip install lxml`   
 
 
 ## Components
-- When you run this package from command line, it typically returns the following as columns in an output.csv file. It should be noted before hand that the geo attribute returns an empty column. So you use the geographical coordinate as well as the search radius to get a boundary within which you want to retrieve your tweets data. 
+- When you run this package from command line, it typically returns the following as columns in an output.csv file that would be saved in your working directory. It should be noted before hand that the geo attribute returns an empty column. So if you need to get location based twitter data, you would have to specify the Geographical coordinates as well as the search radius. 
+
   - id (str)
   - permalink (str)
   - username (str)
@@ -26,6 +27,9 @@ This packages assumes you are running python version 3.x on your local machine, 
 
 ## Command Line Arguments
 
+This package was optimized to work more efficiently and seamlessly on Windows CMD, or on Terminal, and the fpllowing are their associated command line arguments.
+
+
   - username (str): An optional specific username from a twitter account. Without "@".
   - since (str. "yyyy-mm-dd"): A lower bound date to restrict search.
   - until (str. "yyyy-mm-dd"): An upper bound date to restrist search.
@@ -33,12 +37,12 @@ This packages assumes you are running python version 3.x on your local machine, 
   - toptweets (bool): If True only the Top Tweets will be retrieved.
   - near(str): A reference location area from where tweets were generated.
   - within (str): A distance radius from "near" location (e.g. 15mi).
-  - maxtweets (int): The maximum number of tweets to be retrieved. If this number is unsetted or lower than 1 all possible tweets will be retrieved.
+  - maxtweets (int): The maximum number of tweets to be retrieved. If no number is set here or is lower than 1 all possible tweets will be retrieved.
 
 
-## Usage
+## Usage - Very Important to Understand!!
 
-Clone or download the repo to your local machine, then cd into the downloaded GetOldTweets3 folder, and open up cmd right in that same folder. and run the following codes in the examples below. Feel free to customize, change the parameters/arguments according to the need of your project. 
+Clone or download the repo to your local machine, then cd into the downloaded GetOldTweets3 folder, and open up command prompt oor terminal right in that same folder. then run the following codes in the examples below. Feel free to customize, change the parameters/arguments according to the need of your project. 
 
 ## Use Cases
 
@@ -66,6 +70,3 @@ Let me know if you have any issues or concerns running these codes in any way. I
 
 
 
-
-
-                                              BELLA CIAO!!!!!
