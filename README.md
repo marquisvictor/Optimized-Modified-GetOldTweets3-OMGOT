@@ -3,7 +3,7 @@ GetOldTweets-Python is a project written in Python to mine old and backdated twe
 
 
  ## Details
-Before coming here to get backdated timeline tweets, you might have gone to Twitter to create a Developer account, before the sad reality dawns on you that you can not mine tweets older than 7 days, using twitter's rest API, unless you pay and even when you do, you are restricted to a limit of 100 tweets daily. Just how slow would that be if you intend to mine say 10 years worth of textual big data for data analysis. You might have also tried "Googling" some other methods to mine old tweets, you might have seen different sites, libraries or tools you didnt know how to use, and all sorts of confusing information on the web. This modified getoldtweets3 library helps you download backdated-timeline twitter data easily and without hassles from command line, either on windows OS, ubuntu-linux OS, or Mac OS. You only need to have python installed on your machine as the primary prerequisite. You also need to set the environment variable path for Python or better still install python in such a way that you can call it from the command line. [check here to see how you can do that easily](https://stackoverflow.com/posts/54934172/)
+Before coming here to get backdated timeline tweets, you might have gone to Twitter to create a Developer account, before the sad reality dawns on you that you can not mine tweets older than 7 days, using twitter's rest API, unless you pay and even when you do, you are restricted to a limit of 100 tweets daily. Just how slow would that be if you intend to mine say 10 years worth of textual big data for data analysis. You might have also tried "Googling" some other methods to mine old tweets, you might have seen different sites, libraries or tools you didnt know how to use, and all sorts of confusing information on the web. This modified getoldtweets3 library helps you download backdated-timeline twitter data easily and without hassles from command line, either on windows OS, ubuntu-linux OS, or Mac OS. You only need to have python installed on your machine as the primary prerequisite. You also need to set the environment variable path for Python or better still, install Python in such a way that you can call it from the command line or Terminal. [check here to see how you can do that easily](https://stackoverflow.com/posts/54934172/)
 
 
 ## Prerequisites
@@ -11,7 +11,7 @@ This packages assumes you are running python version 3.x on your local machine, 
 
 
 ## Components
-- When you run this package from command line, it typically returns the following as columns in an output.csv file that would be saved in your working directory. It should be noted before hand that the geo attribute returns an empty column. So if you need to get location based twitter data, you would have to specify the Geographical coordinates as well as the search radius. 
+- When you run this package from command line, it typically returns the following as columns in an output.csv file that would be saved in your current working directory. It should be noted that the geo attribute returns an empty column. So if you need to get location based twitter data, you would have to specify the Geographical coordinates as well as the search radius. 
 
   - id (str)
   - permalink (str)
@@ -27,7 +27,7 @@ This packages assumes you are running python version 3.x on your local machine, 
 
 ## Command Line Arguments
 
-This package was optimized to work more efficiently and seamlessly on Windows CMD, or on Terminal, and the fpllowing are their associated command line arguments.
+This package was optimized to work more efficiently and seamlessly on both Windows CMD, and on Terminal. The following are their associated command line arguments. 
 
 
   - username (str): An optional specific username from a twitter account. Without "@".
@@ -61,9 +61,9 @@ python GetOldTweets3.py --username "mo4president" --since 2017-05-10 --until 201
 python GetOldTweets3.py --querysearch "football" --lang es --maxtweets 100
 ```
 
-**Use case 4 - Get tweets by querysearch and geo coordinates:**
+**Use case 4 - Get 500 tweets by querysearch and geo coordinates:**
 ```
-python GetOldTweets3.py --querysearch "BBNaija" --near "6.52, 3.37" --within 40km --maxtweets 100
+python GetOldTweets3.py --querysearch "BBNaija" --near "6.52, 3.37" --within 40km --maxtweets 500
 ```
 
 Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.        
