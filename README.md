@@ -63,7 +63,7 @@ Specified ```--username```, ```--since```, ```--until```, and ```--maxtweets``` 
 ```
 python GetOldTweets3.py --querysearch "football" --lang es --maxtweets 100
 ```
-Specified ```--querysearch```, ```--lang```, and ```--maxtweets```, Which in this case was set to 100. And the above command retrieves 100 tweets data from twitter that has the keyword "football" in it. The language here was set to spanish 'es', meaning only spanish tweets are stored. By default The program gathers all the tweets found irrespective of the language. The language parameter acts more like a runtime preprocessing step to seive out unwanted data. 'en' - English, 'cn'- Chinese. 
+Specified ```--querysearch```, ```--lang```, and ```--maxtweets```, Which in this case was set to 100. And the above command retrieves 100 tweets data from twitter that has the keyword "football" in it. The language parameter here was set to spanish 'es', meaning only spanish tweets are stored. By default, the code retrieves all the tweets found on the querysearch keyword irrespective of the language. The language parameter acts more like a runtime preprocessing step to seive out unwanted contents. 'en' - English, 'cn'- Chinese. 
 
 **Use case 4 - Get 500 tweets by querysearch and geo coordinates:**
 ```
@@ -78,8 +78,7 @@ Let me know if you have any issues or concerns running these codes in any way. I
 
 irekponorvictor@gmail.com 
 
-
-AI AFRICA LAB. 
+AI AFRICA LAB. Nigeria. 
 
 
 
