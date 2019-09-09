@@ -51,26 +51,34 @@ Clone or download the repo to your local machine, then cd into the downloaded Ge
 ```
 python GetOldTweets3.py --username "mo4president" --toptweets --maxtweets 100
 ```
-Specified ```--username```, ```--toptweets```, and ```--maxtweets``` which was set to 100. Meaning to retrieve the last 100 top tweets from twitter, made by that username. 
+Specified ```--username```, ```--toptweets```, and ```--maxtweets``` Which was set to 100. Meaning to retrieve the last 100 toptweets from twitter, made by that username. 
 
 **Use case 2 - Get 500 tweets by the username and bound dates**:
 ```
 python GetOldTweets3.py --username "mo4president" --since 2017-05-10 --until 2019-05-10 --maxtweets 500
 ```
+Specified ```--username```, ```--since```, ```--until```, and ```--maxtweets``` Which in this case was set to 500. And the above command retrieves 500 tweets made by the username given fromm May 2017 till May 2019 (2 years worth.)
 
 **Use case 3 - Get tweets by language and keyword search:**
 ```
 python GetOldTweets3.py --querysearch "football" --lang es --maxtweets 100
 ```
+Specified ```--querysearch```, ```--lang```, and ```--maxtweets```, Which in this case was set to 100. And the above command retrieves 100 tweets data from twitter that has the keyword "football" in it. The language here was set to spanish 'es', meaning only spanish tweets are stored. By default The program gathers all the tweets found irrespective of the language. The language parameter acts more like a runtime preprocessing step to seive out unwanted data. 'en' - English, 'cn'- Chinese. 
 
 **Use case 4 - Get 500 tweets by querysearch and geo coordinates:**
 ```
 python GetOldTweets3.py --querysearch "BBNaija" --near "6.52, 3.37" --within 40km --maxtweets 500
 ```
+Specified ```--querysearch```, ```--near```, ```--within```, and ```--maxtweets``` Which in this case was also set to 500. And the above command retrieves 500 tweets data from twitter that has the keyword BBNaija, within a 40km radius of the grographical coordinate given, which happened to be Lagos Island, Lagos state, Nigeria. 
+
+
+
 
 Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.      
 
 irekponorvictor@gmail.com 
+
+
 AI AFRICA LAB. 
 
 
