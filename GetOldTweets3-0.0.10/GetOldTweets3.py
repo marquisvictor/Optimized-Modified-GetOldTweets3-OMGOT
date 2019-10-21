@@ -46,6 +46,8 @@ if sys.version_info[0] < 3:
 
 import GetOldTweets3 as got
 
+user_name = input("Enter user handle: ")
+
 def main(argv):
     if len(argv) == 0:
         print('You must pass some parameters. Use \"-h\" to help.')
@@ -195,7 +197,7 @@ def main(argv):
             else:
                 print(cnt, end=' ', flush=True)
 
-        print("Downloading tweets...")
+        print("Downloading tweets...") 
         got.manager.TweetManager.getTweets(tweetCriteria, receiveBuffer, debug=debug)
 
     except getopt.GetoptError as err:
@@ -215,5 +217,38 @@ def main(argv):
             print()
             print('Done. Output file generated "%s".' % outputFileName)
 
+
+
 if __name__ == '__main__':
     main(sys.argv[1:])
+
+#Cleaning the data
+import pandas as pd
+data_1 = pd.read_csv("output_got.csv")
+
+#Check the tweet content
+data_1.fillna("",inplace=True)
+# Data Cleaning
+
+#Remove hashtags, links etc
+cleaned_tweets = []
+count = 0
+while count <= (data_1.shape[0])-1:
+    val = data_1.text[count]
+    v = ' '.join(re.sub(r"http(s)?://((\w+).?){1,}", " ",val).split())
+    c = re.sub('pic.twitter.com/[A-Za-z0-9]+','',v)
+    i = re.sub(r'@[A-Za-z0-9_]+', '', c)
+    s = ' '.join(re.sub("#[A-Za-z0-9]+"," ",i).split())
+    j = re.sub(r'…', '', s)
+    cleaned_tweets.append(j)
+    count = count + 1
+
+#Saving data to csv
+data = pd.DataFrame(cleaned_tweets,columns=[""])
+data.to_csv(f"{user_name}.csv",index=False)
+
+# Play a sound to signal the end.
+import winsound
+duration = 1000  # milliseconds
+freq = 440  # Hz
+winsound.Beep(freq, duration)
