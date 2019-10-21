@@ -46,7 +46,7 @@ Clone or download the repo to your local machine, then cd into the downloaded Ge
 
 ## Use Cases
 
-**Use case 1 - Get the last 100 top tweets by username:**
+**Use case 1 - Get the most recent 100 top tweets by username:**
 
 ```
 python GetOldTweets3.py --username "mo4president" --toptweets --maxtweets 100
@@ -74,11 +74,13 @@ Specified ```--querysearch```, ```--near```, ```--within```, and ```--maxtweets`
 
 
 
-Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.      
+Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.   
 
-irekponorvictor@gmail.com 
 
-AI AFRICA LAB. Nigeria. 
+
+
+>irekponorvictor@gmail.com 
+>AI AFRICA LAB. Nigeria. 
 
 
 
