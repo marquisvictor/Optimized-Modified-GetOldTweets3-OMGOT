@@ -27,7 +27,7 @@ This packages assumes you are running python version 3.x on your local machine, 
 
 ## Command Line Arguments
 
-This package was optimized to work more efficiently and seamlessly on both Windows CMD, and on Terminal. The following are their associated command line arguments. 
+This package was optimized to work more efficiently and seamlessly on both Windows Command prompt (CMD), and on UNIX Terminal. The following are their associated command line arguments. 
 
 
   - username (str): An optional specific username from a twitter account. Without "@".
