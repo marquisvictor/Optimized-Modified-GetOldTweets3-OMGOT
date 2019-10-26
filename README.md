@@ -1,4 +1,4 @@
-# Modified-GetOldTweets3
+# Optimized-modified-GetOldTweets3-OMGOT
 GetOldTweets-Python is a project written in Python to mine old and backdated tweets, It bypasses some limitations/restrictions of the Twitter API. This Repo houses an improvement fork of the original GetOldTweets Library by [Jefferson Herique](https://github.com/Jefferson-Henrique/GetOldTweets-python). The improvement makes running this package on Windows OS seamless with Python 3.x. 
 
 
