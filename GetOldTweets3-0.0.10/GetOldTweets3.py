@@ -46,6 +46,8 @@ if sys.version_info[0] < 3:
 
 import GetOldTweets3 as got
 
+user_name = input("Enter user tweeter handle: ")
+
 def main(argv):
     if len(argv) == 0:
         print('You must pass some parameters. Use \"-h\" to help.')
@@ -217,3 +219,27 @@ def main(argv):
 
 if __name__ == '__main__':
     main(sys.argv[1:])
+#Cleaning the data
+import pandas as pd
+data_1 = pd.read_csv("output_got.csv")
+
+#Check the tweet content
+data_1.fillna("",inplace=True)
+# Data Cleaning
+
+#Remove hashtags, links etc
+cleaned_tweets = []
+count = 0
+while count <= (data_1.shape[0])-1:
+    val = data_1.text[count]
+    remove_links = ' '.join(re.sub(r"http(s)?://((\w+).?){1,}", " ",val).split())
+    remove_piclink = re.sub('pic.twitter.com/[A-Za-z0-9]+','',remove_links)
+    remove_handles = re.sub(r'@[A-Za-z0-9_]+', '', remove_piclink)
+    remove_hashtags = ' '.join(re.sub("#[A-Za-z0-9]+"," ",remove_handles).split())
+    remove_dots = re.sub(r'…', '', remove_hashtags)
+    cleaned_tweets.append(remove_dots)
+    count = count + 1
+
+#Saving data to csv
+data = pd.DataFrame(cleaned_tweets,columns=[""])
+data.to_csv(f"{user_name}.csv",index=False)
