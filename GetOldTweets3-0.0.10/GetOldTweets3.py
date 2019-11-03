@@ -46,7 +46,7 @@ if sys.version_info[0] < 3:
 
 import GetOldTweets3 as got
 
-user_name = input("Enter user tweeter handle: ")
+user_name = input("what would have the file saved as: ")
 
 def main(argv):
     if len(argv) == 0:
