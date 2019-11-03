@@ -46,7 +46,7 @@ if sys.version_info[0] < 3:
 
 import GetOldTweets3 as got
 
-user_name = input("Enter user tweeter handle: ")
+file_name = input("Enter File Name: ")
 
 def main(argv):
     if len(argv) == 0:
@@ -242,4 +242,4 @@ while count <= (data_1.shape[0])-1:
 
 #Saving data to csv
 data = pd.DataFrame(cleaned_tweets,columns=[""])
-data.to_csv(f"{user_name}.csv",index=False)
+data.to_csv(f"{file_name}.csv",index=False)
