@@ -219,6 +219,9 @@ def main(argv):
 
 if __name__ == '__main__':
     main(sys.argv[1:])
+
+print("Cleaning Tweets...")
+
 #Cleaning the data
 import pandas as pd
 data_1 = pd.read_csv("output_got.csv")
@@ -244,3 +247,4 @@ data = pd.DataFrame(cleaned_tweets,columns=["Cleaned Tweets"])
 data_1.drop(["text"],axis=1,inplace=True)
 result = pd.concat([data_1,data],1,ignore_index=True)
 result.to_csv(f"{file_name}.csv",index=False)
+print("Done.")
