@@ -9,7 +9,7 @@ Before coming here to get backdated timeline tweets, you might have gone to Twit
 ## Prerequisites
 This packages assumes you are running python version 3.x on your local machine, and that you have already set the python environment variable path, so you can interactively fire up python from command prompt or terminal without getting any error. If you haven't, kindly follow this [stackoverflow answer](https://stackoverflow.com/questions/3701646/how-to-add-to-the-pythonpath-in-windows-so-it-finds-my-modules-packages) for guidance, [you might want to take a look at this too for more clarity](https://stackoverflow.com/posts/54934172/edit). 
 
-After getting that right and out of the  way, the next major python packages you need to install are pyQuery, and Lxml for handling requests and xml/html documents. That could be easily done on cmd or terminal by - just typing `pip install pyquery` once that is done, then you do `pip install lxml`   
+After getting that right and out of the  way, the next major python packages you need to install are pyQuery, and Lxml for handling requests and xml/html documents. That could be easily done on cmd or on terminal by - just typing `pip install pyquery` once that is done, then you do `pip install lxml`   
 
 
 ## Components
