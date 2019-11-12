@@ -45,8 +45,10 @@ This package was optimized to work more efficiently and seamlessly on both Windo
 ## Usage - Very Important to Understand.
 
 1. Clone or download the repo to your local machine.
-2. cd into the downloaded GetOldTweets3 folder, and open up command prompt or terminal right in that same folder. 
-3. then run the codes in the examples below. 
+2. Unzip it.
+3. cd to the unzipped Optimized-Modified-GetOldTweets3-OMGOT-master folder
+4. cd again to the GetOldTweets3-0.0.10 folder inside unzipped Optimized-Modified-GetOldTweets3-OMGOT-master folder, and fire up command prompt or terminal right there. 
+5. then run the codes in the examples below. 
 
 Please Feel free to customize, change the parameters/arguments as used in the examples below according to the needs of your project. 
 
