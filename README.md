@@ -11,7 +11,7 @@ This packages assumes you are running python version 3.x on your local machine, 
 
 
 ## Components
-- When you run this package from command line, it typically returns the following as columns in an output.csv file that would be saved in your current working directory. It should be noted that the geo attribute returns an empty column. So if you need to get location based twitter data, you would have to specify the Geographical coordinates as well as the search radius. 
+- When you run this package from command line, it typically returns the following as columns in an output.csv file that would be saved in your current working directory. It should be noted that the geo attribute returns an empty column. So if you need to get location based twitter user data, you would have to specify the Geographical coordinates as well as the search radius. 
 
   - id (str)
   - permalink (str)
@@ -42,7 +42,11 @@ This package was optimized to work more efficiently and seamlessly on both Windo
 
 ## Usage - Very Important to Understand!!
 
-Clone or download the repo to your local machine, then cd into the downloaded GetOldTweets3 folder, and open up command prompt or terminal right in that same folder. then run the following codes in the examples below. Please Feel free to customize, change the parameters/arguments as used in the examples below according to the needs of your project. 
+1. Clone or download the repo to your local machine.
+2. cd into the downloaded GetOldTweets3 folder, and open up command prompt or terminal right in that same folder. 
+3. then run the codes in the examples below. 
+
+Please Feel free to customize, change the parameters/arguments as used in the examples below according to the needs of your project. 
 
 ## Use Cases
 
@@ -79,8 +83,10 @@ Let me know if you have any issues or concerns running these codes in any way. I
 
 
 
-## irekponorvictor@gmail.com 
-#### AI AFRICA LAB. Nigeria. 
+### [You can connect with me on LinkedIn by clicking this link](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/)
+### [And also on Twitter](https://twitter.com/IrekponorVictor)
 
+
+#### AI-AFRICA LAB,Nigeria. 
 
 
