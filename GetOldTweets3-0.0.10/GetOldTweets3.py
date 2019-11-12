@@ -240,6 +240,7 @@ while count <= (data_1.shape[0])-1:
     cleaned_tweets.append(remove_dots)
     count = count + 1
 
-#Saving data to csv
-data = pd.DataFrame(cleaned_tweets,columns=[""])
-data.to_csv(f"{file_name}.csv",index=False)
+data = pd.DataFrame(cleaned_tweets,columns=["Cleaned Tweets"])
+data_1.drop(["text"],axis=1,inplace=True)
+result = pd.concat([data_1,data],1,ignore_index=True)
+result.to_csv(f"{file_name}.csv",index=False)
