@@ -30,17 +30,17 @@ This packages assumes you are running python version 3.x on your local machine, 
 This package was optimized to work more efficiently and seamlessly on both Windows Command prompt (CMD), and on UNIX Terminal. The following are their associated command line arguments. 
 
 
-  - username (str): An optional specific username from a twitter account. Without "@".
-  - since (str. "yyyy-mm-dd"): A lower bound date to restrict search.
-  - until (str. "yyyy-mm-dd"): An upper bound date to restrist search.
-  - querysearch (str): A query text to be matched.
-  - toptweets (bool): If True only the Top Tweets will be retrieved.
-  - near(str): A reference location area from where tweets were generated.
-  - within (str): A distance radius from "near" location (e.g. 15mi).
-  - maxtweets (int): The maximum number of tweets to be retrieved. If no number is set here or is lower than 1 all possible tweets will be retrieved.
+  - username (**str**): An optional specific username from a twitter account. Without "@".
+  - since (**str. "yyyy-mm-dd"**): A lower bound date to restrict search.
+  - until **(str. "yyyy-mm-dd"**): An upper bound date to restrist search.
+  - querysearch (**str**): A query text to be matched.
+  - toptweets (**bool**): If True only the Top Tweets will be retrieved.
+  - near(**str**): A reference location area from where tweets were generated.
+  - within (**str**): A distance radius from "near" location (e.g. 15mi).
+  - maxtweets (**int**): The maximum number of tweets to be retrieved. If no number is set here or is lower than 1 all possible tweets will be retrieved.
 
 
-## Usage - Very Important to Understand!!
+## Usage - Very Important to Understand.
 
 1. Clone or download the repo to your local machine.
 2. cd into the downloaded GetOldTweets3 folder, and open up command prompt or terminal right in that same folder. 
@@ -83,10 +83,10 @@ Let me know if you have any issues or concerns running these codes in any way. I
 
 
 
-### [You can connect with me on LinkedIn by clicking this link](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/)
-### [And also on Twitter](https://twitter.com/IrekponorVictor)
+#### [Connect with me on linkedIn by clicking this link](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/).
+#### [Twitter](https://twitter.com/IrekponorVictor).
+#### [Read my latest write-ups on medium](https://medium.com/@IrekponorVictor).
 
-
-#### AI-AFRICA LAB,Nigeria. 
+##### AI-AFRICA LAB, NIGERIA. 
 
 
