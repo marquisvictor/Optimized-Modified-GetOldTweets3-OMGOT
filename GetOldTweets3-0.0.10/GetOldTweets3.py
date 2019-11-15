@@ -220,7 +220,7 @@ def main(argv):
             print("Cleaning Tweets...")
 
             #Cleaning the data
-            import pandas as pd
+            data_1 = pd.read_csv(value) 
             data_1 = pd.read_csv(val)
             #Check the tweet content
             data_1.fillna("",inplace=True)
