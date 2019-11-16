@@ -46,8 +46,6 @@ if sys.version_info[0] < 3:
 
 import GetOldTweets3 as got
 
-file_name = input("Enter File Name: ")
-
 def main(argv):
     if len(argv) == 0:
         print('You must pass some parameters. Use \"-h\" to help.')
@@ -220,8 +218,8 @@ def main(argv):
             print("Cleaning Tweets...")
 
             #Cleaning the data
+            import pandas as pd
             data_1 = pd.read_csv(value) 
-            data_1 = pd.read_csv(val)
             #Check the tweet content
             data_1.fillna("",inplace=True)
             # Data Cleaning
@@ -241,8 +239,9 @@ def main(argv):
             data = pd.DataFrame(cleaned_tweets,columns=["Cleaned Tweets"])
             data_1.drop(["text"],axis=1,inplace=True)
             result = pd.concat([data_1,data],1,ignore_index=True)
-            result.to_csv(f"{file_name}.csv",index=False)
-            print("Done.")
+            cleaned_name = "Cleaned_" + value
+            result.to_csv(cleaned_name,index=False)
+            print('Done. Cleaned file generated as "%s".' % cleaned_name)
 
 
 if __name__ == '__main__':
