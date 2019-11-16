@@ -165,7 +165,7 @@ def main(argv):
                     print("Warning: due to multiple username batches `maxtweets' set to %i" % maxtweets_)
             else:
                 tweetCriteria.username = usernames.pop()
-        val = (f"{outputFileName}")
+        value = (f"{outputFileName}")
         outputFile = open(outputFileName, "w+", encoding="utf8")
         outputFile.write('date,username,to,replies,retweets,favorites,text,geo,mentions,hashtags,id,permalink\n')
 
