@@ -63,7 +63,7 @@ Specified ```--username```, ```--toptweets```, and ```--maxtweets``` Which was s
 
 **Use case 2 - Get 500 tweets by the username and bound dates**:
 ```
-python GetOldTweets3.py --username "mo4president" --since 2017-05-10 --until 2019-05-10 --maxtweets 500
+python GetOldTweets3.py --username "SOdaibo" --since 2017-05-10 --until 2019-05-10 --maxtweets 500
 ```
 Specified ```--username```, ```--since```, ```--until```, and ```--maxtweets``` Which in this case was set to 500. And the above command retrieves 500 tweets made by the username given fromm May 2017 till May 2019 (2 years worth.)
 
