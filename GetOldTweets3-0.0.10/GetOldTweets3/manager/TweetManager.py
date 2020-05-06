@@ -85,6 +85,7 @@ class TweetManager:
 
                     tweet.username = usernames[0]
                     tweet.to = usernames[1] if len(usernames) >= 2 else None  # take the first recipient if many
+                    tweetPQ("p.js-tweet-text")('img').each(lambda i, e: PyQuery(e).replace_with(PyQuery(e).attr("alt"))) # Unwrap emoji
                     tweet.text = re.sub(r"\s+", " ", tweetPQ("p.js-tweet-text").text())\
                         .replace('# ', '#').replace('@ ', '@').replace('$ ', '$')
                     tweet.retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""))
