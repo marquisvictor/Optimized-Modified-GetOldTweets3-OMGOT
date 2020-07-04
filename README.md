@@ -91,6 +91,6 @@ Let me know if you have any issues or concerns running these codes in any way. I
 #### [Twitter](https://twitter.com/IrekponorVictor).
 #### [Read my latest write-ups on medium](https://medium.com/@IrekponorVictor).
 
-##### AI-AFRICA LAB, NIGERIA. 
+#### [I also just recently built a Personal Website](https://victor-e-irekponor.netlify.app).
 
 
