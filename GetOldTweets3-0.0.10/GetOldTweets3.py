@@ -239,6 +239,7 @@ def main(argv):
             data = pd.DataFrame(cleaned_tweets,columns=["Cleaned Tweets"])
             data_1.drop(["text"],axis=1,inplace=True)
             result = pd.concat([data_1,data],1,ignore_index=True)
+            result.columns = ['date','username','to','replies','retweets','favorites','geo','mentions','hashtags','id','permalink','text']
             cleaned_name = "Cleaned_" + value
             result.to_csv(cleaned_name,index=False)
             print('Done. Cleaned file generated as "%s".' % cleaned_name)
