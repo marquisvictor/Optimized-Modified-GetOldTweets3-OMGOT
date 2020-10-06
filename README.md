@@ -87,10 +87,6 @@ Let me know if you have any issues or concerns running these codes in any way. I
 
 
 
-#### [Connect with me on linkedIn by clicking this link](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/).
+#### [Connect with me on linkedIn](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/).
 #### [Twitter](https://twitter.com/IrekponorVictor).
 #### [Read my latest write-ups on medium](https://medium.com/@IrekponorVictor).
-
-#### [I also just recently built a Personal Website](https://victor-e-irekponor.netlify.app).
-
-
