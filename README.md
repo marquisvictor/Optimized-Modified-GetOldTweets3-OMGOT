@@ -85,6 +85,12 @@ Specified ```--querysearch```, ```--near```, ```--within```, and ```--maxtweets`
 Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.   
 
 
+### Update: 
+
+This tool is currently broken. Because twitter made an upgrade to their API endpoints to V1.2, as a result of that, some of the endpoints used in this tool became deprecated. Here's some more details on their new [API](https://blog.twitter.com/developer/en_us/topics/tips/2020/understanding-the-new-tweet-payload.html). 
+I will be working to fix this and get this tool up and running ASAP, because I know a lot of individuals usiing this tool for their academic thesis and projects. 
+
+
 
 
 #### [Connect with me on linkedIn](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/).
