@@ -101,7 +101,7 @@ Here's the little modification I did:
 
 from twint import *
 ```
-- Then I opened terminal in the same folder where I have the cli.py and run the first command on their [github readme](https://github.com/marquisvictor/twint/blob/master/README.md). Only replacing the `twint` with `python cli.py` and the username with my own. As shown below:
+- Then I opened terminal in the same folder where I have the ```cli.py``` file and run the first command on their [github readme](https://github.com/marquisvictor/twint/blob/master/README.md). Only replacing the `twint` with `python cli.py` and the username with my own. As shown below:
 
 `python cli.py -u irekponorvictor`
 
