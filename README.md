@@ -85,7 +85,7 @@ Specified ```--querysearch```, ```--near```, ```--within```, and ```--maxtweets`
 ### Update (18-09-20): 
 
 This tool is currently broken because twitter made an upgrade to their API endpoints from V1.1 to V1.2, and as a result of that, some of the endpoints used in this tool became deprecated. [Here's some more details on their new API](https://blog.twitter.com/developer/en_us/topics/tips/2020/understanding-the-new-tweet-payload.html). 
-I will be working to fix this and get this tool up and running ASAP, because I know a lot of individuals usiing this tool for their academic thesis and projects. 
+I will be working to fix this and get this tool up and running ASAP, because I know a number of individuals usiing this tool for their academic thesis and personal/learning projects. 
 
 ### Update (12-10-20): 
 Things moved pretty fast, I apologise for the silence. I have been quite busy on my end. There is an alternative tool I made use of today with slight modification to the CLI use-case (I am big fan of the terminal, and wriiting less code). Its called Twint, I think it serves the same purpose as this tool and more (IT is very RICH!). Here's a link to the [github repo for Twint](https://github.com/marquisvictor/twint). 
