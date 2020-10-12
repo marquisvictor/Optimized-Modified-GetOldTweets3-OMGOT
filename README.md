@@ -82,17 +82,31 @@ Specified ```--querysearch```, ```--near```, ```--within```, and ```--maxtweets`
 
 
 
-Let me know if you have any issues or concerns running these codes in any way. If you followed the instructions carefully, it works on all OS's CLI.   
-
-
 ### Update (18-09-20): 
 
 This tool is currently broken because twitter made an upgrade to their API endpoints from V1.1 to V1.2, and as a result of that, some of the endpoints used in this tool became deprecated. [Here's some more details on their new API](https://blog.twitter.com/developer/en_us/topics/tips/2020/understanding-the-new-tweet-payload.html). 
 I will be working to fix this and get this tool up and running ASAP, because I know a lot of individuals usiing this tool for their academic thesis and projects. 
 
+### Update (12-10-20): 
+Things moved pretty fast, I apologise for the silence. I have been quite busy on my end. There is an alternative tool I made use of today with slight modification to the CLI use-case (I am big fan of the terminal, and wriiting less code). Its called Twint, I think it serves the same purpose as this tool and more (IT is very RICH!). Here's a link to the [github repo for Twint](https://github.com/marquisvictor/twint). 
 
+Here's the little modification I did:
+- After cloning the repo, I navigated to the Twint folder and looked for a ```cli.py``` file. 
+- I copied it and moved it one level outside the twint folder. 
+- once outside the Twint folder, I opened it and commented out the previous imports and added mine. Just like it is below.
+```
+# from . import run
+# from . import config
+# from . import storage
 
+from twint import *
+```
+- Then I opened terminal in the same folder where I have the cli.py and run the first command on their [github readme](https://github.com/marquisvictor/twint/blob/master/README.md). Only replacing the `twint` with `python cli.py` and the username with my own. As shown below:
 
-#### [Connect with me on linkedIn](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/).
+`python cli.py -u irekponorvictor`
+
+This worked very well for me, The Twint tool is also actively maintained at the moment. So If you find yourselves here, and I've not rectified this (optimizedGetOldTweets) tool yet, Twint tool would definitely work for your use-case. I would go ahead to update the medium post now. 
+
+#### [Feel free to connect with me on linkedIn](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/).
 #### [Twitter](https://twitter.com/IrekponorVictor).
 #### [Read my latest write-ups on medium](https://medium.com/@IrekponorVictor).
