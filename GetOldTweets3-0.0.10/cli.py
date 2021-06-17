@@ -18,6 +18,7 @@ import argparse
 
 from GetOldTweets3 import *
 
+
 def error(_error, message):
     """ Print errors to stdout
     """

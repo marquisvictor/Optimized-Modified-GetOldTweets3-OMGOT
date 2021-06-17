@@ -1,297 +1,429 @@
-import sqlite3
-import sys
+import sys, os, datetime
+from asyncio import get_event_loop, TimeoutError, ensure_future, new_event_loop, set_event_loop
+
+from . import datelock, feed, get, output, storage
+from .token import TokenExpiryException
+from . import token
+from .storage import db
+from .feed import NoMoreTweetsException
+
+import logging as logme
+
 import time
-import hashlib
 
-from datetime import datetime
+bearer = 'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs' \
+         '%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA'
 
-def Conn(database):
-    if database:
-        print("[+] Inserting into Database: " + str(database))
-        conn = init(database)
-        if isinstance(conn, str): # error
-            print(conn)
-            sys.exit(1)
-    else:
-        conn = ""
 
-    return conn
-
-def init(db):
-    try:
-        conn = sqlite3.connect(db)
-        cursor = conn.cursor()
-
-        table_users = """
-            CREATE TABLE IF NOT EXISTS
-                users(
-                    id integer not null,
-                    id_str text not null,
-                    name text,
-                    username text not null,
-                    bio text,
-                    location text,
-                    url text,
-                    join_date text not null,
-                    join_time text not null,
-                    tweets integer,
-                    following integer,
-                    followers integer,
-                    likes integer,
-                    media integer,
-                    private integer not null,
-                    verified integer not null,
-                    profile_image_url text not null,
-                    background_image text,
-                    hex_dig  text not null,
-                    time_update integer not null,
-                    CONSTRAINT users_pk PRIMARY KEY (id, hex_dig)
-                );
-            """
-        cursor.execute(table_users)
-
-        table_tweets = """
-            CREATE TABLE IF NOT EXISTS
-                tweets (
-                    id integer not null,
-                    id_str text not null,
-                    tweet text default '',
-                    language text default '',
-                    conversation_id text not null,
-                    created_at integer not null,
-                    date text not null,
-                    time text not null,
-                    timezone text not null,
-                    place text default '',
-                    replies_count integer,
-                    likes_count integer,
-                    retweets_count integer,
-                    user_id integer not null,
-                    user_id_str text not null,
-                    screen_name text not null,
-                    name text default '',
-                    link text,
-                    mentions text,
-                    hashtags text,
-                    cashtags text,
-                    urls text,
-                    photos text,
-                    thumbnail text,
-                    quote_url text,
-                    video integer,
-                    geo text,
-                    near text,
-                    source text,
-                    time_update integer not null,
-                    `translate` text default '',
-                    trans_src text default '',
-                    trans_dest text default '',
-                    PRIMARY KEY (id)
-                );
-        """
-        cursor.execute(table_tweets)
-
-        table_retweets = """
-            CREATE TABLE IF NOT EXISTS
-                retweets(
-                    user_id integer not null,
-                    username text not null,
-                    tweet_id integer not null,
-                    retweet_id integer not null,
-                    retweet_date integer,
-                    CONSTRAINT retweets_pk PRIMARY KEY(user_id, tweet_id),
-                    CONSTRAINT user_id_fk FOREIGN KEY(user_id) REFERENCES users(id),
-                    CONSTRAINT tweet_id_fk FOREIGN KEY(tweet_id) REFERENCES tweets(id)
-                );
-        """
-        cursor.execute(table_retweets)
-
-        table_reply_to = """
-            CREATE TABLE IF NOT EXISTS
-                replies(
-                    tweet_id integer not null,
-                    user_id integer not null,
-                    username text not null,
-                    CONSTRAINT replies_pk PRIMARY KEY (user_id, tweet_id),
-                    CONSTRAINT tweet_id_fk FOREIGN KEY (tweet_id) REFERENCES tweets(id)
-                );
-        """
-        cursor.execute(table_reply_to)
-
-        table_favorites =  """
-            CREATE TABLE IF NOT EXISTS
-                favorites(
-                    user_id integer not null,
-                    tweet_id integer not null,
-                    CONSTRAINT favorites_pk PRIMARY KEY (user_id, tweet_id),
-                    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES users(id),
-                    CONSTRAINT tweet_id_fk FOREIGN KEY (tweet_id) REFERENCES tweets(id)
-                );
-        """
-        cursor.execute(table_favorites)
-
-        table_followers = """
-            CREATE TABLE IF NOT EXISTS
-                followers (
-                    id integer not null,
-                    follower_id integer not null,
-                    CONSTRAINT followers_pk PRIMARY KEY (id, follower_id),
-                    CONSTRAINT id_fk FOREIGN KEY(id) REFERENCES users(id),
-                    CONSTRAINT follower_id_fk FOREIGN KEY(follower_id) REFERENCES users(id)
-                );
-        """
-        cursor.execute(table_followers)
-
-        table_following = """
-            CREATE TABLE IF NOT EXISTS
-                following (
-                    id integer not null,
-                    following_id integer not null,
-                    CONSTRAINT following_pk PRIMARY KEY (id, following_id),
-                    CONSTRAINT id_fk FOREIGN KEY(id) REFERENCES users(id),
-                    CONSTRAINT following_id_fk FOREIGN KEY(following_id) REFERENCES users(id)
-                );
-        """
-        cursor.execute(table_following)
-
-        table_followers_names = """
-            CREATE TABLE IF NOT EXISTS
-                followers_names (
-                    user text not null,
-                    time_update integer not null,
-                    follower text not null,
-                    PRIMARY KEY (user, follower)
-                );
-        """
-        cursor.execute(table_followers_names)
-
-        table_following_names = """
-            CREATE TABLE IF NOT EXISTS
-                following_names (
-                    user text not null,
-                    time_update integer not null,
-                    follows text not null,
-                    PRIMARY KEY (user, follows)
-                );
-        """
-        cursor.execute(table_following_names)
-
-        return conn
-    except Exception as e:
-        return str(e)
-
-def fTable(Followers):
-    if Followers:
-        table = "followers_names"
-    else:
-        table = "following_names"
-
-    return table
-
-def uTable(Followers):
-    if Followers:
-        table = "followers"
-    else:
-        table = "following"
-
-    return table
-
-def follow(conn, Username, Followers, User):
-    try:
-        time_ms = round(time.time()*1000)
-        cursor = conn.cursor()
-        entry = (User, time_ms, Username,)
-        table = fTable(Followers)
-        query = f"INSERT INTO {table} VALUES(?,?,?)"
-        cursor.execute(query, entry)
-        conn.commit()
-    except sqlite3.IntegrityError:
-        pass
-
-def get_hash_id(conn, id):
-    cursor = conn.cursor()
-    cursor.execute('SELECT hex_dig FROM users WHERE id = ? LIMIT 1', (id,))
-    resultset = cursor.fetchall()
-    return resultset[0][0] if resultset else -1
-
-def user(conn, config, User):
-    try:
-        time_ms = round(time.time()*1000)
-        cursor = conn.cursor()
-        user = [int(User.id), User.id, User.name, User.username, User.bio, User.location, User.url,User.join_date, User.join_time, User.tweets, User.following, User.followers, User.likes, User.media_count, User.is_private, User.is_verified, User.avatar, User.background_image]
-
-        hex_dig = hashlib.sha256(','.join(str(v) for v in user).encode()).hexdigest()
-        entry = tuple(user) + (hex_dig,time_ms,)
-        old_hash = get_hash_id(conn, User.id)
-
-        if old_hash == -1 or old_hash != hex_dig:
-            query = f"INSERT INTO users VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            cursor.execute(query, entry)
+class Twint:
+    def __init__(self, config):
+        logme.debug(__name__ + ':Twint:__init__')
+        if config.Resume is not None and (config.TwitterSearch or config.Followers or config.Following):
+            logme.debug(__name__ + ':Twint:__init__:Resume')
+            self.init = self.get_resume(config.Resume)
         else:
-            pass
+            self.init = '-1'
 
-        if config.Followers or config.Following:
-            table = uTable(config.Followers)
-            query = f"INSERT INTO {table} VALUES(?,?)"
-            cursor.execute(query, (config.User_id, int(User.id)))
+        self.feed = [-1]
+        self.count = 0
+        self.user_agent = ""
+        self.config = config
+        self.config.Bearer_token = bearer
+        # TODO might have to make some adjustments for it to work with multi-treading
+        # USAGE : to get a new guest token simply do `self.token.refresh()`
+        self.token = token.Token(config)
+        self.token.refresh()
+        self.conn = db.Conn(config.Database)
+        self.d = datelock.Set(self.config.Until, self.config.Since)
+        # verbose.Elastic(config.Elasticsearch)
 
-        conn.commit()
-    except sqlite3.IntegrityError:
-        pass
+        if self.config.Store_object:
+            logme.debug(__name__ + ':Twint:__init__:clean_follow_list')
+            output._clean_follow_list()
 
-def tweets(conn, Tweet, config):
+        # if self.config.Pandas_clean:
+        #     logme.debug(__name__ + ':Twint:__init__:pandas_clean')
+        #     storage.panda.clean()
+
+    def get_resume(self, resumeFile):
+        if not os.path.exists(resumeFile):
+            return '-1'
+        with open(resumeFile, 'r') as rFile:
+            _init = rFile.readlines()[-1].strip('\n')
+            return _init
+
+    async def Feed(self):
+        logme.debug(__name__ + ':Twint:Feed')
+        consecutive_errors_count = 0
+        while True:
+            # this will receive a JSON string, parse it into a `dict` and do the required stuff
+            try:
+                response = await get.RequestUrl(self.config, self.init, headers=[("User-Agent", self.user_agent)])
+            except TokenExpiryException as e:
+                logme.debug(__name__ + 'Twint:Feed:' + str(e))
+                self.token.refresh()
+                response = await get.RequestUrl(self.config, self.init, headers=[("User-Agent", self.user_agent)])
+
+            if self.config.Debug:
+                print(response, file=open("twint-last-request.log", "w", encoding="utf-8"))
+
+            self.feed = []
+            try:
+                if self.config.Favorites:
+                    self.feed, self.init = feed.MobileFav(response)
+                    favorite_err_cnt = 0
+                    if len(self.feed) == 0 and len(self.init) == 0:
+                        while ((len(self.feed) == 0 or len(self.init) == 0) and favorite_err_cnt < 5):
+                            self.user_agent = await get.RandomUserAgent(wa=False)
+                            response = await get.RequestUrl(self.config, self.init,
+                                                            headers=[("User-Agent", self.user_agent)])
+                            self.feed, self.init = feed.MobileFav(response)
+                            favorite_err_cnt += 1
+                            time.sleep(1)
+                        if favorite_err_cnt == 5:
+                            print("Favorite page could not be fetched")
+                    if not self.count % 40:
+                        time.sleep(5)
+                elif self.config.Followers or self.config.Following:
+                    self.feed, self.init = feed.Follow(response)
+                    if not self.count % 40:
+                        time.sleep(5)
+                elif self.config.Profile:
+                    if self.config.Profile_full:
+                        self.feed, self.init = feed.Mobile(response)
+                    else:
+                        self.feed, self.init = feed.profile(response)
+                elif self.config.TwitterSearch:
+                    try:
+                        self.feed, self.init = feed.search_v2(response)
+                    except NoMoreTweetsException as e:
+                        logme.debug(__name__ + ':Twint:Feed:' + str(e))
+                        print(e, 'is it though? because sometimes twitter lie haha.')
+                break
+            except TimeoutError as e:
+                if self.config.Proxy_host.lower() == "tor":
+                    print("[?] Timed out, changing Tor identity...")
+                    if self.config.Tor_control_password is None:
+                        logme.critical(__name__ + ':Twint:Feed:tor-password')
+                        sys.stderr.write("Error: config.Tor_control_password must be set for proxy autorotation!\r\n")
+                        sys.stderr.write(
+                            "Info: What is it? See https://stem.torproject.org/faq.html#can-i-interact-with-tors-controller-interface-directly\r\n")
+                        break
+                    else:
+                        get.ForceNewTorIdentity(self.config)
+                        continue
+                else:
+                    logme.critical(__name__ + ':Twint:Feed:' + str(e))
+                    print(str(e))
+                    break
+            except Exception as e:
+                if self.config.Profile or self.config.Favorites:
+                    print("[!] Twitter does not return more data, scrape stops here.")
+                    break
+
+                logme.critical(__name__ + ':Twint:Feed:noData' + str(e))
+                # Sometimes Twitter says there is no data. But it's a lie.
+                # raise
+                consecutive_errors_count += 1
+                if consecutive_errors_count < self.config.Retries_count:
+                    # skip to the next iteration if wait time does not satisfy limit constraints
+                    delay = round(consecutive_errors_count ** self.config.Backoff_exponent, 1)
+
+                    # if the delay is less than users set min wait time then replace delay
+                    if self.config.Min_wait_time > delay:
+                        delay = self.config.Min_wait_time
+
+                    sys.stderr.write('sleeping for {} secs\n'.format(delay))
+                    time.sleep(delay)
+                    self.user_agent = await get.RandomUserAgent(wa=True)
+                    continue
+                logme.critical(__name__ + ':Twint:Feed:Tweets_known_error:' + str(e))
+                sys.stderr.write(str(e) + " [x] run.Feed")
+                sys.stderr.write(
+                    "[!] if get this error but you know for sure that more tweets exist, please open an issue and we will investigate it!")
+                break
+        if self.config.Resume:
+            print(self.init, file=open(self.config.Resume, "a", encoding="utf-8"))
+
+    async def follow(self):
+        await self.Feed()
+        if self.config.User_full:
+            logme.debug(__name__ + ':Twint:follow:userFull')
+            self.count += await get.Multi(self.feed, self.config, self.conn)
+        else:
+            logme.debug(__name__ + ':Twint:follow:notUserFull')
+            for user in self.feed:
+                self.count += 1
+                username = user.find("a")["name"]
+                await output.Username(username, self.config, self.conn)
+
+    async def favorite(self):
+        logme.debug(__name__ + ':Twint:favorite')
+        await self.Feed()
+        favorited_tweets_list = []
+        for tweet in self.feed:
+            tweet_dict = {}
+            self.count += 1
+            try:
+                tweet_dict['data-item-id'] = tweet.find("div", {"class": "tweet-text"})['data-id']
+                t_url = tweet.find("span", {"class": "metadata"}).find("a")["href"]
+                tweet_dict['data-conversation-id'] = t_url.split('?')[0].split('/')[-1]
+                tweet_dict['username'] = tweet.find("div", {"class": "username"}).text.replace('\n', '').replace(' ',
+                                                                                                                 '')
+                tweet_dict['tweet'] = tweet.find("div", {"class": "tweet-text"}).find("div", {"class": "dir-ltr"}).text
+                date_str = tweet.find("td", {"class": "timestamp"}).find("a").text
+                # test_dates = ["1m", "2h", "Jun 21, 2019", "Mar 12", "28 Jun 19"]
+                # date_str = test_dates[3]
+                if len(date_str) <= 3 and (date_str[-1] == "m" or date_str[-1] == "h"):  # 25m 1h
+                    dateu = str(datetime.date.today())
+                    tweet_dict['date'] = dateu
+                elif ',' in date_str:  # Aug 21, 2019
+                    sp = date_str.replace(',', '').split(' ')
+                    date_str_formatted = sp[1] + ' ' + sp[0] + ' ' + sp[2]
+                    dateu = datetime.datetime.strptime(date_str_formatted, "%d %b %Y").strftime("%Y-%m-%d")
+                    tweet_dict['date'] = dateu
+                elif len(date_str.split(' ')) == 3:  # 28 Jun 19
+                    sp = date_str.split(' ')
+                    if len(sp[2]) == 2:
+                        sp[2] = '20' + sp[2]
+                    date_str_formatted = sp[0] + ' ' + sp[1] + ' ' + sp[2]
+                    dateu = datetime.datetime.strptime(date_str_formatted, "%d %b %Y").strftime("%Y-%m-%d")
+                    tweet_dict['date'] = dateu
+                else:  # Aug 21
+                    sp = date_str.split(' ')
+                    date_str_formatted = sp[1] + ' ' + sp[0] + ' ' + str(datetime.date.today().year)
+                    dateu = datetime.datetime.strptime(date_str_formatted, "%d %b %Y").strftime("%Y-%m-%d")
+                    tweet_dict['date'] = dateu
+
+                favorited_tweets_list.append(tweet_dict)
+
+            except Exception as e:
+                logme.critical(__name__ + ':Twint:favorite:favorite_field_lack')
+                print("shit: ", date_str, " ", str(e))
+
+        try:
+            self.config.favorited_tweets_list += favorited_tweets_list
+        except AttributeError:
+            self.config.favorited_tweets_list = favorited_tweets_list
+
+    async def profile(self):
+        await self.Feed()
+        if self.config.Profile_full:
+            logme.debug(__name__ + ':Twint:profileFull')
+            self.count += await get.Multi(self.feed, self.config, self.conn)
+        else:
+            logme.debug(__name__ + ':Twint:notProfileFull')
+            for tweet in self.feed:
+                self.count += 1
+                await output.Tweets(tweet, self.config, self.conn)
+
+    async def tweets(self):
+        await self.Feed()
+        # TODO : need to take care of this later
+        if self.config.Location:
+            logme.debug(__name__ + ':Twint:tweets:location')
+            self.count += await get.Multi(self.feed, self.config, self.conn)
+        else:
+            logme.debug(__name__ + ':Twint:tweets:notLocation')
+            for tweet in self.feed:
+                self.count += 1
+                await output.Tweets(tweet, self.config, self.conn)
+
+    async def main(self, callback=None):
+
+        task = ensure_future(self.run())  # Might be changed to create_task in 3.7+.
+
+        if callback:
+            task.add_done_callback(callback)
+
+        await task
+
+    async def run(self):
+        if self.config.TwitterSearch:
+            self.user_agent = await get.RandomUserAgent(wa=True)
+        else:
+            self.user_agent = await get.RandomUserAgent()
+
+        if self.config.User_id is not None and self.config.Username is None:
+            logme.debug(__name__ + ':Twint:main:user_id')
+            self.config.Username = await get.Username(self.config.User_id, self.config.Bearer_token,
+                                                      self.config.Guest_token)
+
+        if self.config.Username is not None and self.config.User_id is None:
+            logme.debug(__name__ + ':Twint:main:username')
+
+            self.config.User_id = await get.User(self.config.Username, self.config, self.conn,
+                                                 self.config.Bearer_token,
+                                                 self.config.Guest_token, True)
+            if self.config.User_id is None:
+                raise ValueError("Cannot find twitter account with name = " + self.config.Username)
+
+        # TODO : will need to modify it to work with the new endpoints
+        if self.config.TwitterSearch and self.config.Since and self.config.Until:
+            logme.debug(__name__ + ':Twint:main:search+since+until')
+            while self.d._since < self.d._until:
+                self.config.Since = str(self.d._since)
+                self.config.Until = str(self.d._until)
+                if len(self.feed) > 0:
+                    await self.tweets()
+                else:
+                    logme.debug(__name__ + ':Twint:main:gettingNewTweets')
+                    break
+
+                if get.Limit(self.config.Limit, self.count):
+                    break
+        else:
+            logme.debug(__name__ + ':Twint:main:not-search+since+until')
+            while True:
+                if len(self.feed) > 0:
+                    if self.config.Followers or self.config.Following:
+                        logme.debug(__name__ + ':Twint:main:follow')
+                        await self.follow()
+                    elif self.config.Favorites:
+                        logme.debug(__name__ + ':Twint:main:favorites')
+                        await self.favorite()
+                    elif self.config.Profile:
+                        logme.debug(__name__ + ':Twint:main:profile')
+                        await self.profile()
+                    elif self.config.TwitterSearch:
+                        logme.debug(__name__ + ':Twint:main:twitter-search')
+                        await self.tweets()
+                else:
+                    logme.debug(__name__ + ':Twint:main:no-more-tweets')
+                    break
+
+                # logging.info("[<] " + str(datetime.now()) + ':: run+Twint+main+CallingGetLimit2')
+                if get.Limit(self.config.Limit, self.count):
+                    logme.debug(__name__ + ':Twint:main:reachedLimit')
+                    break
+
+        # if self.config.Count:
+        #     verbose.Count(self.count, self.config)
+
+
+def run(config, callback=None):
+    logme.debug(__name__ + ':run')
     try:
-        time_ms = round(time.time()*1000)
-        cursor = conn.cursor()
-        entry = (Tweet.id,
-                    Tweet.id_str,
-                    Tweet.tweet,
-                    Tweet.lang,
-                    Tweet.conversation_id,
-                    Tweet.datetime,
-                    Tweet.datestamp,
-                    Tweet.timestamp,
-                    Tweet.timezone,
-                    Tweet.place,
-                    Tweet.replies_count,
-                    Tweet.likes_count,
-                    Tweet.retweets_count,
-                    Tweet.user_id,
-                    Tweet.user_id_str,
-                    Tweet.username,
-                    Tweet.name,
-                    Tweet.link,
-                    ",".join(Tweet.mentions),
-                    ",".join(Tweet.hashtags),
-                    ",".join(Tweet.cashtags),
-                    ",".join(Tweet.urls),
-                    ",".join(Tweet.photos),
-                    Tweet.thumbnail,
-                    Tweet.quote_url,
-                    Tweet.video,
-                    Tweet.geo,
-                    Tweet.near,
-                    Tweet.source,
-                    time_ms,
-                    Tweet.translate,
-                    Tweet.trans_src,
-                    Tweet.trans_dest)
-        cursor.execute('INSERT INTO tweets VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', entry)
+        get_event_loop()
+    except RuntimeError as e:
+        if "no current event loop" in str(e):
+            set_event_loop(new_event_loop())
+        else:
+            logme.exception(__name__ + ':run:Unexpected exception while handling an expected RuntimeError.')
+            raise
+    except Exception as e:
+        logme.exception(
+            __name__ + ':run:Unexpected exception occurred while attempting to get or create a new event loop.')
+        raise
 
-        if config.Favorites:
-            query = 'INSERT INTO favorites VALUES(?,?)'
-            cursor.execute(query, (config.User_id, Tweet.id))
+    get_event_loop().run_until_complete(Twint(config).main(callback))
 
-        if Tweet.retweet:
-            query = 'INSERT INTO retweets VALUES(?,?,?,?,?)'
-            _d = datetime.timestamp(datetime.strptime(Tweet.retweet_date, "%Y-%m-%d %H:%M:%S"))
-            cursor.execute(query, (int(Tweet.user_rt_id), Tweet.user_rt, Tweet.id, int(Tweet.retweet_id), _d))
 
-        if Tweet.reply_to:
-            for reply in Tweet.reply_to:
-                query = 'INSERT INTO replies VALUES(?,?,?)'
-                cursor.execute(query, (Tweet.id, int(reply['user_id']), reply['username']))
+def Favorites(config):
+    logme.debug(__name__ + ':Favorites')
+    config.Favorites = True
+    config.Following = False
+    config.Followers = False
+    config.Profile = False
+    config.Profile_full = False
+    config.TwitterSearch = False
+    run(config)
+    # if config.Pandas_au:
+    #     storage.panda._autoget("tweet")
 
-        conn.commit()
-    except sqlite3.IntegrityError:
-        pass
+
+def Followers(config):
+    logme.debug(__name__ + ':Followers')
+    config.Followers = True
+    config.Following = False
+    config.Profile = False
+    config.Profile_full = False
+    config.Favorites = False
+    config.TwitterSearch = False
+    run(config)
+    # if config.Pandas_au:
+    #     storage.panda._autoget("followers")
+    #     if config.User_full:
+    #         storage.panda._autoget("user")
+    # if config.Pandas_clean and not config.Store_object:
+    #     # storage.panda.clean()
+    #     output._clean_follow_list()
+
+
+def Following(config):
+    logme.debug(__name__ + ':Following')
+    config.Following = True
+    config.Followers = False
+    config.Profile = False
+    config.Profile_full = False
+    config.Favorites = False
+    config.TwitterSearch = False
+    run(config)
+    # if config.Pandas_au:
+    #     storage.panda._autoget("following")
+    #     if config.User_full:
+    #         storage.panda._autoget("user")
+    # if config.Pandas_clean and not config.Store_object:
+    #     # storage.panda.clean()
+    #     output._clean_follow_list()
+
+
+def Lookup(config):
+    logme.debug(__name__ + ':Lookup')
+
+    try:
+        get_event_loop()
+    except RuntimeError as e:
+        if "no current event loop" in str(e):
+            set_event_loop(new_event_loop())
+        else:
+            logme.exception(__name__ + ':Lookup:Unexpected exception while handling an expected RuntimeError.')
+            raise
+    except Exception as e:
+        logme.exception(
+            __name__ + ':Lookup:Unexpected exception occured while attempting to get or create a new event loop.')
+        raise
+
+    try:
+        if config.User_id is not None:
+            logme.debug(__name__ + ':Twint:Lookup:user_id')
+            config.Username = get_event_loop().run_until_complete(get.Username(config.User_id))
+
+        url = f"https://mobile.twitter.com/{config.Username}?prefetchTimestamp=" + str(int(time.time() * 1000))
+        get_event_loop().run_until_complete(get.User(url, config, db.Conn(config.Database)))
+
+        # if config.Pandas_au:
+        #     storage.panda._autoget("user")
+    except RuntimeError as e:
+        if "no current event loop" in str(e):
+            logme.exception(__name__ + ':Lookup:Previous attempt to to create an event loop failed.')
+
+        raise
+    except Exception as e:
+        logme.exception(__name__ + ':Lookup:Unexpected exception occured.')
+        raise
+
+
+def Profile(config):
+    logme.debug(__name__ + ':Profile')
+    config.Profile = True
+    config.Favorites = False
+    config.Following = False
+    config.Followers = False
+    config.TwitterSearch = False
+    run(config)
+    # if config.Pandas_au:
+    #     storage.panda._autoget("tweet")
+
+
+def Search(config, callback=None):
+    logme.debug(__name__ + ':Search')
+    config.TwitterSearch = True
+    config.Favorites = False
+    config.Following = False
+    config.Followers = False
+    config.Profile = False
+    config.Profile_full = False
+    run(config, callback)
+    # if config.Pandas_au:
+    #     storage.panda._autoget("tweet")
