@@ -16,7 +16,7 @@ import argparse
 # from . import config
 # from . import storage
 
-from GetOldTweets3.manager import *
+from GetOldTweets3 import *
 
 def error(_error, message):
     """ Print errors to stdout
