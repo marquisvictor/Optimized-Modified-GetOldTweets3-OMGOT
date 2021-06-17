@@ -8,7 +8,7 @@ This tool was built out of the need to eliminate the barriers that the Twitter A
 BigTweet provides a means of getting old/backdated twitter data for analysis, bypassing the rate limits and restrictions from twitter API, giving you unlimited tweet textual data along with some other metadata such as; dates and time information, likes, retweets, replies, and tweet geolocation.
 
 
-##### Operating system
+## Operating system
 OMGOT was tested on Ubuntu distribution of the Linux operating system and on Windows 7, 8, 10.
 
 
