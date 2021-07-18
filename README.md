@@ -68,6 +68,8 @@ python cli.py -s governance
 ```
 ---
 
+I've added my local enviroment dependencies in a requirements.txt file, so if any body has issues with the dependencies or environments, do a ```pip install -r requirements.txt```.
+
 If you have any question, or need extra help, you are welcome to connect with me. See below:
 
 #### [connect with me on linkedIn](https://www.linkedin.com/in/victor-e-irekponor-a926a1154/).
