@@ -52,12 +52,17 @@ python cli.py --username "irekponorVictor"
 python cli.py --username "irekponorVictor" --since "2015-12-20 20:30:15
 ```
 
-**Use case 3 - Get tweets from a radius of 1km around a place in Lagos, Nigeria and export them to a csv**
+**Use case 3 - Get all tweets tweeted from a user from January 2019 - December 2019 and save in a csv file**:
+```
+python cli.py --username "irekponorvictor" --since "2019-01-01" --until "2019-12-31" -o user.csv --csv
+```
+
+**Use case 4 - Get tweets from a radius of 1km around a place in Lagos, Nigeria and export them to a csv**
 ```
 python cli.py -g="6.465422, 3.406448, 1km" -o Lagos.csv --csv
 ```
 
-**Use case 4 - Get every tweet containing the word "governance" from every where**
+**Use case 5 - Get every tweet containing the word "governance" from every where**
 ```
 python cli.py -s governance
 ```
