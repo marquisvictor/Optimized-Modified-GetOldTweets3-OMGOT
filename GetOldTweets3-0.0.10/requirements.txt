@@ -36,7 +36,7 @@ idna==2.10
 imutils==0.5.4
 itsdangerous==1.1.0
 Jinja2==2.11.3
-lxml==4.6.3
+lxml==4.6.5
 Mako==1.1.4
 MarkupSafe==1.1.1
 mlflow==1.16.0
