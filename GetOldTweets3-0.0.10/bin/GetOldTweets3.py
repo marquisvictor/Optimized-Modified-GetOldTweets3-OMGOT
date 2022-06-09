@@ -14,7 +14,6 @@ username-from-file: a file with a list of usernames,
               lang: the language of tweets
             output: a filename to export the results (default is "output_got.csv")
 
-
 Examples:
 
 # Example 1 - Get tweets by query search:
