@@ -37,7 +37,7 @@ imutils==0.5.4
 itsdangerous==1.1.0
 Jinja2==2.11.3
 lxml==4.6.3
-Mako==1.1.4
+Mako==1.2.2
 MarkupSafe==1.1.1
 mlflow==1.16.0
 multidict==5.1.0
