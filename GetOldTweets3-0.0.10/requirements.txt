@@ -77,5 +77,5 @@ urllib3==1.26.4
 virtualenv==20.4.0
 waitress==2.0.0
 websocket-client==0.58.0
-Werkzeug==1.0.1
+Werkzeug==2.2.3
 yarl==1.6.3
