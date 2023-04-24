@@ -75,7 +75,7 @@ tqdm==4.56.0
 typing-extensions==3.7.4.3
 urllib3==1.26.4
 virtualenv==20.4.0
-waitress==2.0.0
+waitress==2.1.1
 websocket-client==0.58.0
 Werkzeug==1.0.1
 yarl==1.6.3
