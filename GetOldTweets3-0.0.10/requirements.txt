@@ -69,7 +69,7 @@ six==1.15.0
 smmap==4.0.0
 soupsieve==2.2.1
 SQLAlchemy==1.4.11
-sqlparse==0.4.1
+sqlparse==0.4.2
 tabulate==0.8.9
 tqdm==4.56.0
 typing-extensions==3.7.4.3
